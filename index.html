@@ -6,34 +6,65 @@
   <title>NEXHAB</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <style>
-    * {margin:0; padding:0; box-sizing:border-box;}
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    /* Body Layout */
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #0b0b15;
-      color: #222;
+      background-color: #0b0b15; /* Dark starfield background */
+      color: #fff;
       line-height: 1.6;
-      height: 100vh; /* Fullscreen */
-      overflow: hidden; /* No scrolling */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding-bottom: 60px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       position: relative;
     }
 
     /* Starfield */
     #starfield {
       position: fixed;
-      top: 0; left: 0;
+      top: 0; 
+      left: 0;
       width: 100%;
       height: 100%;
       z-index: 0;
     }
 
-    /* Parallax Logo */
-    .logo-container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    /* Main Content */
+    .content {
+      max-width: 900px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-grow: 1;
+      position: relative;
       z-index: 2;
+    }
+
+    /* Logo Container */
+    .logo-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .logo-container img {
@@ -43,11 +74,20 @@
       height: auto;
       opacity: 0;
       animation: fadeIn 2s ease-out forwards;
+      position: relative;
+      z-index: 1;
     }
 
+    /* Fade-in Animation for Logo */
     @keyframes fadeIn {
-      0% { opacity:0; transform:translate(-50%, -40%);}
-      100% { opacity:1; transform:translate(-50%, -50%);}
+      0% { 
+        opacity: 0; 
+        transform: translateY(20px); 
+      }
+      100% { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
     }
 
     /* Footer */
@@ -65,15 +105,51 @@
       text-shadow: 0 0 5px rgba(0,0,0,0.8);
     }
 
-    footer a {color:#cdacd2ff;text-decoration:none;font-weight:bold;}
-    footer a:hover {text-decoration:underline;}
+    footer a {
+      color: #cdacd2ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Fallback Text */
+    .fallback-text {
+      font-size: 1rem;
+      color: #ccc;
+      display: none;
+    }
+
+    .logo-container img.error + .fallback-text {
+      display: block;
+    }
+
+    /* Improved Mobile Support */
+    @media (max-width: 768px) {
+      .content {
+        padding: 15px;
+      }
+      .logo-container img {
+        width: 60vw;
+        max-width: 300px;
+      }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Starfield -->
   <canvas id="starfield"></canvas>
 
-  <div class="logo-container">
-    <img id="logo" src="https://nukesfall.github.io/nexhab/logo.png" alt="NEXHAB logo">
+  <div class="content">
+    <div class="logo-container">
+      <div class="logo-wrapper">
+        <img id="logo" src="https://nukesfall.github.io/nexhab/logo.png" alt="NEXHAB Logo" onerror="this.classList.add('error')">
+        <span class="fallback-text">Logo failed to load</span>
+      </div>
+    </div>
   </div>
 
   <footer>
@@ -83,7 +159,9 @@
   <script>
     // Fade in logo
     const logo = document.getElementById('logo');
-    logo.addEventListener('load', () => { logo.style.opacity = 1; });
+    logo.addEventListener('load', () => {
+      logo.style.opacity = 1;
+    });
 
     // Starfield + Shooting Stars
     const canvas = document.getElementById('starfield');
@@ -99,18 +177,29 @@
     resizeCanvas();
 
     for (let i = 0; i < numStars; i++) {
-      stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,size:Math.random()*2,speed:Math.random()*0.2+0.05});
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2,
+        speed: Math.random() * 0.2 + 0.05
+      });
     }
 
     function createShootingStar() {
-      shootingStars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height/2,length:Math.random()*80+50,speed:Math.random()*8+6,opacity:1});
+      shootingStars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height / 2,
+        length: Math.random() * 80 + 50,
+        speed: Math.random() * 8 + 6,
+        opacity: 1
+      });
     }
 
     function drawStars() {
       ctx.fillStyle = '#fff';
       for (let s of stars) {
         ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
         ctx.fill();
         s.y += s.speed;
         if (s.y > canvas.height) s.y = 0;
@@ -118,7 +207,7 @@
     }
 
     function drawShootingStars() {
-      for (let i = shootingStars.length-1; i >= 0; i--) {
+      for (let i = shootingStars.length - 1; i >= 0; i--) {
         let s = shootingStars[i];
         ctx.strokeStyle = `rgba(255,255,255,${s.opacity})`;
         ctx.lineWidth = 2;
@@ -129,18 +218,19 @@
         s.x += s.speed;
         s.y -= s.speed;
         s.opacity -= 0.02;
-        if (s.opacity <= 0) shootingStars.splice(i,1);
+        if (s.opacity <= 0) shootingStars.splice(i, 1);
       }
     }
 
     function animate() {
-      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       drawStars();
       drawShootingStars();
-      if (Math.random()<0.02) createShootingStar();
+      if (Math.random() < 0.02) createShootingStar();
       requestAnimationFrame(animate);
     }
     animate();
   </script>
+
 </body>
 </html>
