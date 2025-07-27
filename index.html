@@ -6,17 +6,11 @@
   <title>NEXHAB</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <style>
-    /* Global Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * {margin:0; padding:0; box-sizing:border-box;}
 
-    /* Body Layout */
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #0b0b15; /* Dark starfield background */
+      background-color: #13121fff; /* Updated background color */
       color: #fff;
       line-height: 1.6;
       display: flex;
@@ -29,17 +23,14 @@
       position: relative;
     }
 
-    /* Starfield */
     #starfield {
       position: fixed;
-      top: 0; 
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       z-index: 0;
     }
 
-    /* Main Content */
     .content {
       max-width: 900px;
       padding: 20px;
@@ -52,20 +43,8 @@
       z-index: 2;
     }
 
-    /* Logo Container */
-    .logo-container {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .logo-wrapper {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    .logo-container {display: flex; flex-direction: column; align-items: center;}
+    .logo-wrapper {display: flex; justify-content: center; align-items: center;}
 
     .logo-container img {
       width: 40vw;
@@ -78,19 +57,11 @@
       z-index: 1;
     }
 
-    /* Fade-in Animation for Logo */
     @keyframes fadeIn {
-      0% { 
-        opacity: 0; 
-        transform: translateY(20px); 
-      }
-      100% { 
-        opacity: 1; 
-        transform: translateY(0); 
-      }
+      0% {opacity: 0; transform: translateY(20px);}
+      100% {opacity: 1; transform: translateY(0);}
     }
 
-    /* Footer */
     footer {
       font-size: 0.875rem;
       color: #cdacd2ff;
@@ -104,43 +75,20 @@
       background-color: transparent;
       text-shadow: 0 0 5px rgba(0,0,0,0.8);
     }
+    footer a {color:#cdacd2ff; text-decoration:none; font-weight:bold;}
+    footer a:hover {text-decoration:underline;}
 
-    footer a {
-      color: #cdacd2ff;
-      text-decoration: none;
-      font-weight: bold;
-    }
+    .fallback-text {font-size:1rem; color:#ccc; display:none;}
+    .logo-container img.error + .fallback-text {display:block;}
 
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    /* Fallback Text */
-    .fallback-text {
-      font-size: 1rem;
-      color: #ccc;
-      display: none;
-    }
-
-    .logo-container img.error + .fallback-text {
-      display: block;
-    }
-
-    /* Improved Mobile Support */
     @media (max-width: 768px) {
-      .content {
-        padding: 15px;
-      }
-      .logo-container img {
-        width: 60vw;
-        max-width: 300px;
-      }
+      .content {padding: 15px;}
+      .logo-container img {width: 60vw; max-width: 300px;}
     }
   </style>
 </head>
 <body>
 
-  <!-- Starfield -->
   <canvas id="starfield"></canvas>
 
   <div class="content">
@@ -157,13 +105,9 @@
   </footer>
 
   <script>
-    // Fade in logo
     const logo = document.getElementById('logo');
-    logo.addEventListener('load', () => {
-      logo.style.opacity = 1;
-    });
+    logo.addEventListener('load', () => { logo.style.opacity = 1; });
 
-    // Starfield + Shooting Stars
     const canvas = document.getElementById('starfield');
     const ctx = canvas.getContext('2d');
     let stars = [], shootingStars = [];
@@ -181,7 +125,8 @@
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         size: Math.random() * 2,
-        speed: Math.random() * 0.2 + 0.05
+        speed: Math.random() * 0.2 + 0.05,
+        opacity: Math.random() * 0.5 + 0.5 // varying brightness
       });
     }
 
@@ -196,21 +141,26 @@
     }
 
     function drawStars() {
-      ctx.fillStyle = '#fff';
       for (let s of stars) {
         ctx.beginPath();
+        ctx.fillStyle = `rgba(230,224,245,${s.opacity})`; // Tinted stars
+        ctx.shadowBlur = 2;
+        ctx.shadowColor = '#d8d0f0'; // subtle glow
         ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
         ctx.fill();
         s.y += s.speed;
         if (s.y > canvas.height) s.y = 0;
       }
+      ctx.shadowBlur = 0; // reset blur
     }
 
     function drawShootingStars() {
       for (let i = shootingStars.length - 1; i >= 0; i--) {
         let s = shootingStars[i];
-        ctx.strokeStyle = `rgba(255,255,255,${s.opacity})`;
+        ctx.strokeStyle = `rgba(230,224,245,${s.opacity})`;
         ctx.lineWidth = 2;
+        ctx.shadowBlur = 6;
+        ctx.shadowColor = '#e6dfff';
         ctx.beginPath();
         ctx.moveTo(s.x, s.y);
         ctx.lineTo(s.x - s.length, s.y + s.length);
@@ -220,6 +170,7 @@
         s.opacity -= 0.02;
         if (s.opacity <= 0) shootingStars.splice(i, 1);
       }
+      ctx.shadowBlur = 0;
     }
 
     function animate() {
