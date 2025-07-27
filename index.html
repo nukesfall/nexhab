@@ -58,7 +58,9 @@
     }
 
     .logo-container img {
-      width: 293.75px; /* Increased by 25% from 235px */
+      width: 40vw; /* Responsive: 40% of viewport width */
+      max-width: 450px; /* Won't get too big */
+      min-width: 250px; /* Won't get too small */
       height: auto;
       opacity: 0;
       animation: fadeIn 2s ease-out forwards;
@@ -115,16 +117,6 @@
 
     .logo-container img.error + .fallback-text {
       display: block;
-    }
-
-    /* Improved Mobile Support */
-    @media (max-width: 768px) {
-      .content {
-        padding: 15px;
-      }
-      .logo-container img {
-        width: 234.375px; /* Mobile size also 25% bigger than 187.5px */
-      }
     }
   </style>
 </head>
