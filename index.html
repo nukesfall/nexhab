@@ -13,20 +13,28 @@
       box-sizing: border-box;
     }
 
-    /* Body Layout */
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #cdacd2ff; /* Updated background */
-      color: #222; /* Dark text for readability */
+      background-color: #0b0b15; /* Darker for stars */
+      color: #222;
       line-height: 1.6;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
       padding-bottom: 60px;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      overflow: hidden; /* Hide scrollbars for animation */
       position: relative;
+    }
+
+    /* Canvas for Stars */
+    #starfield {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
     }
 
     /* Main Content */
@@ -42,51 +50,27 @@
       z-index: 2;
     }
 
-    /* Logo Container */
-    .logo-container {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .logo-wrapper {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
+    /* Logo */
     .logo-container img {
-      width: 40vw; /* Responsive: 40% of viewport width */
-      max-width: 450px; /* Won't get too big */
-      min-width: 250px; /* Won't get too small */
+      width: 40vw;
+      max-width: 450px;
+      min-width: 250px;
       height: auto;
       opacity: 0;
       animation: fadeIn 2s ease-out forwards;
-      -webkit-animation: fadeIn 2s ease-out forwards;
       position: relative;
       z-index: 1;
     }
 
-    /* Fade-in Animation for Logo */
     @keyframes fadeIn {
-      0% { 
-        opacity: 0; 
-        transform: translateY(20px); 
-        -webkit-transform: translateY(20px);
-      }
-      100% { 
-        opacity: 1; 
-        transform: translateY(0); 
-        -webkit-transform: translateY(0);
-      }
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
     /* Footer */
     footer {
       font-size: 0.875rem;
-      color: #f4e3d7ff; /* Updated footer text color */
+      color: #f4e3d7ff;
       padding: 15px 0;
       text-align: center;
       width: 100%;
@@ -94,40 +78,27 @@
       bottom: 0;
       left: 0;
       z-index: 3;
-      background-color: #cdacd2ff; /* Matches the main background */
-      text-shadow: none;
+      background-color: transparent;
+      text-shadow: 0 0 5px rgba(0,0,0,0.8);
     }
 
     footer a {
-      color: #f4e3d7ff; /* Updated link color to match footer text */
+      color: #f4e3d7ff;
       text-decoration: none;
       font-weight: bold;
     }
 
-    footer a:hover {
-      text-decoration: underline;
-    }
+    footer a:hover { text-decoration: underline; }
 
-    /* Fallback Text */
-    .fallback-text {
-      font-size: 1rem;
-      color: #444;
-      display: none;
-    }
-
-    .logo-container img.error + .fallback-text {
-      display: block;
-    }
   </style>
 </head>
 <body>
+  <!-- Starfield -->
+  <canvas id="starfield"></canvas>
 
   <div class="content">
     <div class="logo-container">
-      <div class="logo-wrapper">
-        <img id="logo" src="https://nukesfall.github.io/nexhab/logo.png" alt="NEXHAB logo" onerror="this.classList.add('error')">
-        <span class="fallback-text">Logo failed to load</span>
-      </div>
+      <img id="logo" src="https://nukesfall.github.io/nexhab/logo.png" alt="NEXHAB logo" onerror="this.classList.add('error')">
     </div>
   </div>
 
@@ -136,11 +107,79 @@
   </footer>
 
   <script>
+    // Fade in logo
     const logo = document.getElementById('logo');
-    logo.addEventListener('load', () => {
-      logo.style.opacity = 1;
-    });
-  </script>
+    logo.addEventListener('load', () => { logo.style.opacity = 1; });
 
+    // Starfield + Shooting Stars
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let stars = [], shootingStars = [];
+    const numStars = 150;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Create stars
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2,
+        speed: Math.random() * 0.2 + 0.05
+      });
+    }
+
+    function createShootingStar() {
+      shootingStars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height / 2,
+        length: Math.random() * 80 + 50,
+        speed: Math.random() * 8 + 6,
+        opacity: 1
+      });
+    }
+
+    function drawStars() {
+      ctx.fillStyle = '#fff';
+      for (let s of stars) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        ctx.fill();
+        s.y += s.speed;
+        if (s.y > canvas.height) s.y = 0;
+      }
+    }
+
+    function drawShootingStars() {
+      for (let i = shootingStars.length - 1; i >= 0; i--) {
+        let s = shootingStars[i];
+        ctx.strokeStyle = `rgba(255,255,255,${s.opacity})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x - s.length, s.y + s.length);
+        ctx.stroke();
+        s.x += s.speed;
+        s.y -= s.speed;
+        s.opacity -= 0.02;
+        if (s.opacity <= 0) shootingStars.splice(i, 1);
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawStars();
+      drawShootingStars();
+      if (Math.random() < 0.02) createShootingStar();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
 </body>
 </html>
