@@ -23,7 +23,8 @@
       align-items: center;
       min-height: 100vh;
       padding-bottom: 60px;
-      overflow: hidden; /* Hide scrollbars for animation */
+      overflow-y: auto;   /* Re-enable vertical scrolling */
+      overflow-x: hidden; /* Prevent horizontal scrolling */
       position: relative;
     }
 
@@ -70,7 +71,7 @@
     /* Footer */
     footer {
       font-size: 0.875rem;
-      color: #cdacd2ff; /* Updated footer text color */
+      color: #cdacd2ff;
       padding: 15px 0;
       text-align: center;
       width: 100%;
@@ -83,7 +84,7 @@
     }
 
     footer a {
-      color: #cdacd2ff; /* Updated link color to match footer text */
+      color: #cdacd2ff;
       text-decoration: none;
       font-weight: bold;
     }
@@ -100,6 +101,7 @@
     <div class="logo-container">
       <img id="logo" src="https://nukesfall.github.io/nexhab/logo.png" alt="NEXHAB logo" onerror="this.classList.add('error')">
     </div>
+    <p style="margin-top:1000px;">Scroll test content — now you can scroll!</p> <!-- Added dummy content for testing -->
   </div>
 
   <footer>
