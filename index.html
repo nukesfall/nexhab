@@ -126,7 +126,7 @@
         y: Math.random() * canvas.height,
         size: Math.random() * 2,
         speed: Math.random() * 0.2 + 0.05,
-        opacity: Math.random() * 0.5 + 0.5 // varying brightness
+        opacity: Math.random() * 0.5 + 0.5 // base brightness
       });
     }
 
@@ -143,7 +143,7 @@
     function drawStars() {
       for (let s of stars) {
         ctx.beginPath();
-        ctx.fillStyle = `rgba(230,224,245,${s.opacity})`; // Tinted stars
+        ctx.fillStyle = `rgba(230,224,245,${s.opacity * 0.5})`; // 50% dimmer
         ctx.shadowBlur = 2;
         ctx.shadowColor = '#d8d0f0'; // subtle glow
         ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
@@ -157,7 +157,7 @@
     function drawShootingStars() {
       for (let i = shootingStars.length - 1; i >= 0; i--) {
         let s = shootingStars[i];
-        ctx.strokeStyle = `rgba(230,224,245,${s.opacity})`;
+        ctx.strokeStyle = `rgba(230,224,245,${s.opacity * 0.5})`; // 50% dimmer
         ctx.lineWidth = 2;
         ctx.shadowBlur = 6;
         ctx.shadowColor = '#e6dfff';
