@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXHAB</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body Layout */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #cdacd2ff; /* Updated background */
+      color: #222; /* Dark text for readability */
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding-bottom: 60px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+    }
+
+    /* Main Content */
+    .content {
+      max-width: 900px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-grow: 1;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Logo Container */
+    .logo-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo-container img {
+      width: 235px;
+      height: auto;
+      opacity: 0;
+      animation: fadeIn 2s ease-out forwards;
+      -webkit-animation: fadeIn 2s ease-out forwards;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Fade-in Animation for Logo */
+    @keyframes fadeIn {
+      0% { 
+        opacity: 0; 
+        transform: translateY(20px); 
+        -webkit-transform: translateY(20px);
+      }
+      100% { 
+        opacity: 1; 
+        transform: translateY(0); 
+        -webkit-transform: translateY(0);
+      }
+    }
+
+    /* Footer */
+    footer {
+      font-size: 0.875rem;
+      color: #f4e3d7ff; /* Updated footer text color */
+      padding: 15px 0;
+      text-align: center;
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 3;
+      background-color: #eaeaea; /* Light grey footer */
+      text-shadow: none;
+    }
+
+    footer a {
+      color: #f4e3d7ff; /* Updated link color to match footer text */
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Fallback Text */
+    .fallback-text {
+      font-size: 1rem;
+      color: #444;
+      display: none;
+    }
+
+    .logo-container img.error + .fallback-text {
+      display: block;
+    }
+
+    /* Improved Mobile Support */
+    @media (max-width: 768px) {
+      .content {
+        padding: 15px;
+      }
+      .logo-container img {
+        width: 187.5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="content">
+    <div class="logo-container">
+      <div class="logo-wrapper">
+        <img id="logo" src="https://nukesfall.github.io/nexhab/logo.png" alt="NEXHAB logo" onerror="this.classList.add('error')">
+        <span class="fallback-text">Logo failed to load</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 <a href="https://www.nexhab.com" target="_blank">Nexus Habitat Corp</a>. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const logo = document.getElementById('logo');
+    logo.addEventListener('load', () => {
+      logo.style.opacity = 1;
+    });
+  </script>
+
+</body>
+</html>
