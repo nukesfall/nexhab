@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="174.72453mm"
+   height="174.72456mm"
+   viewBox="0 0 174.72453 174.72456"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="translate(-41.045599,-20.902315)">
+    <rect
+       style="fill:#13111f;fill-opacity:1;stroke:none;stroke-width:10.6751;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="rect65"
+       width="174.72455"
+       height="174.72455"
+       x="41.045601"
+       y="20.902315" />
+    <path
+       d="m 71.160269,70.66494 c -1.325356,0 -2.338468,0.545713 -3.040314,1.637238 -0.701523,1.013586 -1.052852,2.066115 -1.052852,3.157647 v 65.609525 c 0,1.09156 0.351329,2.18295 1.052852,3.2745 0.701846,1.01359 1.714958,1.52039 3.040314,1.52039 h 47.365351 c 1.16948,0 2.14431,-0.46729 2.92385,-1.4029 0.7797,-0.93561 1.16932,-2.06654 1.16932,-3.39199 V 89.025909 c 0.0782,-1.325453 0.23438,-2.221781 0.46812,-2.689586 0.31175,-0.545774 1.13039,-0.818615 2.45574,-0.818615 h 2.80707 c 1.63744,0 3.04048,0.545713 4.20997,1.637238 1.16964,1.013586 1.71528,2.183417 1.63742,3.508871 v 50.405533 c 0,1.32545 0.3901,2.45638 1.16965,3.39199 0.7797,0.93561 1.71496,1.4029 2.80658,1.4029 h 47.4823 c 1.32534,0 2.33895,-0.5068 3.04064,-1.52039 0.70168,-1.09155 1.05237,-2.18294 1.05237,-3.2745 V 87.038094 c 0,-1.949188 -0.54581,-3.898699 -1.63728,-5.84788 -1.01359,-1.949188 -2.41665,-3.702962 -4.20995,-5.262306 -1.79331,-1.559367 -3.85945,-2.806972 -6.19841,-3.742589 -2.33895,-1.013563 -4.83362,-1.520379 -7.48449,-1.520379 z"
+       style="-inkscape-font-specification:'Capricus Straight Expanded, ';fill:#b49abd;fill-opacity:1;stroke-width:18.2737;stroke-linecap:square;stroke-linejoin:round;paint-order:stroke fill markers"
+       id="path57-8-4" />
+    <path
+       style="fill:#13111f;fill-opacity:1;stroke:#b49abd;stroke-width:7.66017;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       d="m 83.828747,134.60666 c 0,0 70.685283,-3.26379 89.158253,-52.684138"
+       id="path65-7" />
+  </g>
+</svg>
