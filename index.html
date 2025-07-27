@@ -13,8 +13,8 @@
       background-color: #0b0b15;
       color: #222;
       line-height: 1.6;
-      min-height: 200vh; /* Make page scrollable */
-      overflow-x: hidden;
+      height: 100vh; /* Fullscreen */
+      overflow: hidden; /* No scrolling */
       position: relative;
     }
 
@@ -29,12 +29,11 @@
 
     /* Parallax Logo */
     .logo-container {
-      position: fixed;
+      position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 2;
-      will-change: transform;
     }
 
     .logo-container img {
@@ -47,8 +46,8 @@
     }
 
     @keyframes fadeIn {
-      0% { opacity:0; transform:translateY(20px);}
-      100% { opacity:1; transform:translateY(0);}
+      0% { opacity:0; transform:translate(-50%, -40%);}
+      100% { opacity:1; transform:translate(-50%, -50%);}
     }
 
     /* Footer */
@@ -142,14 +141,6 @@
       requestAnimationFrame(animate);
     }
     animate();
-
-    // Parallax effect for logo
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      const logoContainer = document.querySelector('.logo-container');
-      logoContainer.style.transform = `translate(-50%, calc(-50% + ${scrollY * 0.3}px))`;
-      if (scrollY > 300) location.reload(); // Refresh if scrolled too far
-    });
   </script>
 </body>
 </html>
